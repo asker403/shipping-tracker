@@ -1,7 +1,7 @@
 # Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
 
 client_id = "55a8dc9d63236e19f072282574b711ed"
-application_url = "https://example.com"
+application_url = "https://free-shipping-tracker.onrender.com"
 embedded = true
 name = "Free Shipping Tracker"
 
@@ -26,7 +26,7 @@ subpath = "shipping-tracker"
 prefix = "apps"
 
 [auth]
-redirect_urls = [ "https://example.com/api/auth" ]
+redirect_urls = [ "https://free-shipping-tracker.onrender.com/api/auth" ]
 
 [build]
 include_config_on_deploy = true
