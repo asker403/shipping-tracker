@@ -36,7 +36,7 @@ export default function App() {
         {/* Header Section */}
         <header className={styles.header}>
           <div className={styles.badge}>Shopify App</div>
-          <h1 className={styles.heading}>Free Shipping Tracker</h1>
+          <h1 className={styles.heading}>ShipGoal: Free Shipping Bar</h1>
           <p className={styles.text}>
             Boost your Average Order Value (AOV) and delight customers with a sleek, 
             lightning-fast free shipping progress bar customized for your brand.

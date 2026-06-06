@@ -298,7 +298,7 @@ export default function Index() {
   };
 
   return (
-    <s-page heading="NextClick: Free Shipping Tracker Settings">
+    <s-page heading="ShipGoal: Free Shipping Bar Settings">
       <s-button slot="primary-action" onClick={handleSave} {...(isSaving ? { loading: true } : {})}>
         Save settings
       </s-button>

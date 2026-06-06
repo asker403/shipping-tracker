@@ -3,7 +3,7 @@
 client_id = "55a8dc9d63236e19f072282574b711ed"
 application_url = "https://free-shipping-tracker.onrender.com"
 embedded = true
-name = "Free Shipping Tracker"
+name = "ShipGoal: Free Shipping Bar"
 
 [access_scopes]
 # Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
