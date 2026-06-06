@@ -1,0 +1,309 @@
+{% assign settings = shop.metafields.nextclick_tracker.settings.value %}
+{% assign threshold = settings.threshold | default: block.settings.threshold | default: 50 %}
+{% assign threshold_cents = threshold | times: 100 %}
+{% assign text_away = settings.text_away | default: block.settings.text_away | default: "You are only [amount] away from Free Shipping!" %}
+{% assign text_qualified = settings.text_qualified | default: block.settings.text_qualified | default: "🎉 You qualify for Free Shipping!" %}
+{% assign tracker_bg = settings.tracker_bg | default: block.settings.tracker_bg | default: "#ffffff" %}
+{% assign text_color = settings.text_color | default: block.settings.text_color | default: "#2c3e50" %}
+{% assign bar_background = settings.bar_background | default: block.settings.bar_background | default: "#eef2f5" %}
+{% assign bar_color = settings.bar_color | default: block.settings.bar_color | default: "#4facfe" %}
+{% assign bar_color_end = settings.bar_color_end | default: block.settings.bar_color_end | default: "#00f2fe" %}
+
+{% if settings.use_gradient != nil %}
+  {% assign use_gradient = settings.use_gradient %}
+{% else %}
+  {% assign use_gradient = block.settings.use_gradient %}
+{% endif %}
+
+{% comment %} Read premium design styles {% endcomment %}
+{% assign font_family = settings.font_family | default: block.settings.font_family | default: "system" %}
+{% assign border_radius = settings.border_radius | default: block.settings.border_radius | default: "Rounded" %}
+{% assign shadow_style = settings.shadow_style | default: block.settings.shadow_style | default: "Soft" %}
+{% assign glassmorphism = settings.glassmorphism %}
+{% if glassmorphism == nil %}
+  {% assign glassmorphism = block.settings.glassmorphism | default: false %}
+{% endif %}
+{% assign bar_thickness = settings.bar_thickness | default: block.settings.bar_thickness | default: "Standard" %}
+{% assign text_alignment = settings.text_alignment | default: block.settings.text_alignment | default: "center" %}
+{% assign layout_style = settings.layout_style | default: block.settings.layout_style | default: "inline" %}
+
+{% comment %} Load premium typography dynamically from Google Fonts {% endcomment %}
+{% if font_family == "Inter" %}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+{% elsif font_family == "Outfit" %}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+{% elsif font_family == "Playfair Display" %}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+{% endif %}
+
+{%- style -%}
+  [id="nextclick-shipping-tracker-{{ block.id }}"] {
+    --nc-text-color: {{ text_color }};
+    --nc-bar-bg: {{ bar_background }};
+    {% if use_gradient == true or use_gradient == "true" %}
+      --nc-bar-color-gradient: linear-gradient(90deg, {{ bar_color }} 0%, {{ bar_color_end }} 100%);
+    {% else %}
+      --nc-bar-color-gradient: {{ bar_color }};
+    {% endif %}
+
+    /* Custom Style Customizations mapping */
+  }
+
+  [id="nextclick-shipping-tracker-{{ block.id }}"] .nc-progress-bar-fill {
+    display: block !important;
+    {% if use_gradient == true or use_gradient == "true" %}
+      background: linear-gradient(90deg, {{ bar_color }} 0%, {{ bar_color_end }} 100%) !important;
+    {% else %}
+      background: {{ bar_color }} !important;
+    {% endif %}
+  }
+
+  [id="nextclick-shipping-tracker-{{ block.id }}"] {
+    
+    /* Font Family */
+    {% if font_family == "system" %}
+      --nc-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    {% elsif font_family == "Inter" %}
+      --nc-font-family: "Inter", sans-serif;
+    {% elsif font_family == "Outfit" %}
+      --nc-font-family: "Outfit", sans-serif;
+    {% elsif font_family == "Playfair Display" %}
+      --nc-font-family: "Playfair Display", serif;
+    {% endif %}
+
+    /* Border Radius */
+    {% if border_radius == "Sharp" %}
+      --nc-border-radius: 0px;
+    {% elsif border_radius == "Rounded" %}
+      --nc-border-radius: 12px;
+    {% elsif border_radius == "Pill" %}
+      --nc-border-radius: 999px;
+    {% endif %}
+
+    /* Shadow Style */
+    {% if shadow_style == "None" %}
+      --nc-box-shadow: none;
+      --nc-box-shadow-hover: none;
+    {% elsif shadow_style == "Soft" %}
+      --nc-box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
+      --nc-box-shadow-hover: 0 6px 24px rgba(0, 0, 0, 0.06), 0 2px 4px rgba(0, 0, 0, 0.03);
+    {% elsif shadow_style == "Deep" %}
+      --nc-box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08), 0 4px 10px rgba(0, 0, 0, 0.03);
+      --nc-box-shadow-hover: 0 15px 40px rgba(0, 0, 0, 0.12), 0 6px 15px rgba(0, 0, 0, 0.05);
+    {% elsif shadow_style == "Glow" %}
+      --nc-box-shadow: 0 0 15px rgba(79, 172, 254, 0.25);
+      --nc-box-shadow-hover: 0 0 22px rgba(79, 172, 254, 0.45);
+    {% endif %}
+
+    /* Bar Thickness */
+    {% if bar_thickness == "Thin" %}
+      --nc-bar-height: 6px;
+    {% elsif bar_thickness == "Standard" %}
+      --nc-bar-height: 10px;
+    {% elsif bar_thickness == "Chunky" %}
+      --nc-bar-height: 16px;
+    {% endif %}
+
+    /* Text Alignment */
+    --nc-text-align: {{ text_alignment }};
+
+    /* Glassmorphism vs Solid Background */
+    {% if glassmorphism == true or glassmorphism == "true" %}
+      --nc-backdrop-filter: blur(12px);
+      --nc-border: 1px solid rgba(255, 255, 255, 0.3);
+      --nc-tracker-bg: {{ tracker_bg | color_modify: 'alpha', 0.65 | default: 'rgba(255, 255, 255, 0.65)' }};
+    {% else %}
+      --nc-backdrop-filter: none;
+      --nc-border: 1px solid rgba(0, 0, 0, 0.06);
+      --nc-tracker-bg: {{ tracker_bg }};
+    {% endif %}
+  }
+{%- endstyle -%}
+
+{{ 'shipping-tracker.css' | asset_url | stylesheet_tag }}
+
+<nextclick-shipping-tracker 
+     id="nextclick-shipping-tracker-{{ block.id }}"
+     class="nc-layout-{{ layout_style }}"
+     data-threshold-cents="{{ threshold_cents }}" 
+     data-text-away="{{ text_away | escape }}" 
+     data-text-qualified="{{ text_qualified | escape }}"
+     data-cart-total="{{ cart.total_price }}"
+     data-currency-symbol="{{ cart.currency.symbol | default: '$' }}">
+  
+  {% if layout_style != 'inline' %}
+    <button type="button" class="nc-close-button" aria-label="Dismiss shipping tracker" title="Dismiss">&times;</button>
+  {% endif %}
+  
+  <div class="nc-message-container" role="status" aria-live="polite">
+    <!-- Updated dynamically by JS -->
+    {%- if cart.total_price >= threshold_cents -%}
+      {{ text_qualified }}
+    {%- else -%}
+      {%- assign remaining_cents = threshold_cents | minus: cart.total_price -%}
+      {%- assign remaining_amount = remaining_cents | money -%}
+      {{ text_away | replace: '[amount]', remaining_amount }}
+    {%- endif -%}
+  </div>
+
+  <div class="nc-progress-bar-container">
+    {%- assign percentage = cart.total_price | times: 100.0 | divided_by: threshold_cents | at_most: 100.0 -%}
+    <div class="nc-progress-bar-fill" style="display: block !important; width: {{ percentage }}%; {% if use_gradient == true or use_gradient == 'true' %}background: linear-gradient(90deg, {{ bar_color | default: '#4facfe' }} 0%, {{ bar_color_end | default: '#00f2fe' }} 100%) !important;{% else %}background: {{ bar_color | default: '#4facfe' }} !important;{% endif %}"></div>
+  </div>
+</nextclick-shipping-tracker>
+
+<script src="{{ 'shipping-tracker.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+{
+  "name": "Free Shipping Tracker",
+  "target": "section",
+  "settings": [
+    {
+      "type": "number",
+      "id": "threshold",
+      "label": "Free Shipping Threshold ($)",
+      "default": 50
+    },
+    {
+      "type": "text",
+      "id": "text_away",
+      "label": "Message: Away from Threshold",
+      "default": "You are only [amount] away from Free Shipping!",
+      "info": "Use [amount] to show the remaining money."
+    },
+    {
+      "type": "text",
+      "id": "text_qualified",
+      "label": "Message: Free Shipping Achieved",
+      "default": "🎉 You qualify for Free Shipping!"
+    },
+    {
+      "type": "header",
+      "content": "Aesthetics & Colors"
+    },
+    {
+      "type": "color",
+      "id": "tracker_bg",
+      "label": "Container Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Message Text Color",
+      "default": "#2c3e50"
+    },
+    {
+      "type": "color",
+      "id": "bar_background",
+      "label": "Progress Bar Track Color",
+      "default": "#eef2f5"
+    },
+    {
+      "type": "checkbox",
+      "id": "use_gradient",
+      "label": "Use Gradient Fill",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "bar_color",
+      "label": "Progress Bar Fill Color / Gradient Start",
+      "default": "#4facfe"
+    },
+    {
+      "type": "color",
+      "id": "bar_color_end",
+      "label": "Progress Bar Gradient End",
+      "default": "#00f2fe"
+    },
+    {
+      "type": "header",
+      "content": "Premium Design Settings"
+    },
+    {
+      "type": "select",
+      "id": "font_family",
+      "label": "Font Family",
+      "options": [
+        { "value": "system", "label": "System Default" },
+        { "value": "Inter", "label": "Inter" },
+        { "value": "Outfit", "label": "Outfit" },
+        { "value": "Playfair Display", "label": "Playfair Display" }
+      ],
+      "default": "system"
+    },
+    {
+      "type": "select",
+      "id": "border_radius",
+      "label": "Border Radius",
+      "options": [
+        { "value": "Sharp", "label": "Sharp (0px)" },
+        { "value": "Rounded", "label": "Rounded (12px)" },
+        { "value": "Pill", "label": "Pill (999px)" }
+      ],
+      "default": "Rounded"
+    },
+    {
+      "type": "select",
+      "id": "shadow_style",
+      "label": "Shadow Style",
+      "options": [
+        { "value": "None", "label": "None" },
+        { "value": "Soft", "label": "Soft" },
+        { "value": "Deep", "label": "Deep" },
+        { "value": "Glow", "label": "Glow" }
+      ],
+      "default": "Soft"
+    },
+    {
+      "type": "checkbox",
+      "id": "glassmorphism",
+      "label": "Enable Glassmorphism",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "bar_thickness",
+      "label": "Bar Thickness",
+      "options": [
+        { "value": "Thin", "label": "Thin (6px)" },
+        { "value": "Standard", "label": "Standard (10px)" },
+        { "value": "Chunky", "label": "Chunky (16px)" }
+      ],
+      "default": "Standard"
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "Text Alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "select",
+      "id": "layout_style",
+      "label": "Layout Position",
+      "options": [
+        { "value": "inline", "label": "Inline (Standard)" },
+        { "value": "floating-bottom-right", "label": "Floating Bottom-Right" },
+        { "value": "floating-bottom-left", "label": "Floating Bottom-Left" },
+        { "value": "sticky-top", "label": "Sticky Top Banner" },
+        { "value": "sticky-bottom", "label": "Sticky Bottom Banner" }
+      ],
+      "default": "inline"
+    }
+  ]
+}
+{% endschema %}

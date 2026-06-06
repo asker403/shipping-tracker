@@ -1,0 +1,8 @@
+-- CreateTable
+CREATE TABLE "AnalyticsEvent" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "shop" TEXT NOT NULL,
+    "event" TEXT NOT NULL,
+    "cartTotal" INTEGER NOT NULL DEFAULT 0,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
