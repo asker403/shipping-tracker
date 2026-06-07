@@ -20,6 +20,10 @@ api_version = "2026-07"
   uri = "/webhooks/app/scopes_update"
   topics = [ "app/scopes_update" ]
 
+  [[webhooks.subscriptions]]
+  compliance_topics = [ "customers/data_request", "customers/redact", "shop/redact" ]
+  uri = "/webhooks/gdpr"
+
 [app_proxy]
 url = "https://free-shipping-tracker.onrender.com/api/proxy"
 subpath = "shipping-tracker"
