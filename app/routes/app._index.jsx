@@ -322,7 +322,7 @@ export default function Index() {
               Required Setup Step: Configure Free Shipping in Shopify
             </h4>
             <p style={{ color: '#573b00', fontSize: '0.875rem', margin: 0, lineHeight: '1.4' }}>
-              ShipGoal is a visual progress tracker. To ensure customers actually get free shipping at checkout, you must manually set up a <strong>Free Shipping Rate</strong> matching your threshold inside your <a href="/settings/shipping" target="_top" style={{ color: '#573b00', fontWeight: 'bold', textDecoration: 'underline' }}>Shopify Shipping and Delivery Settings</a>.
+              ShipGoal is a visual progress tracker. To ensure customers actually get free shipping at checkout, you must manually set up a <strong>Free Shipping Rate</strong> matching your threshold inside your <strong>Shopify Shipping and Delivery Settings</strong>.
             </p>
           </div>
         </div>
