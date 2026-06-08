@@ -304,6 +304,29 @@ export default function Index() {
       </s-button>
 
       <s-section heading="Configuration Dashboard">
+        {/* Required Setup Warning Banner */}
+        <div style={{
+          background: "#fff9e6",
+          border: "1px solid #f2cf79",
+          borderRadius: "8px",
+          padding: "16px",
+          marginBottom: "20px",
+          display: "flex",
+          gap: "12px",
+          alignItems: "start",
+          boxShadow: "0 1px 3px rgba(0, 0, 0, 0.02)"
+        }}>
+          <span style={{ fontSize: '20px', lineHeight: '1' }}>⚠️</span>
+          <div>
+            <h4 style={{ fontWeight: '600', color: '#573b00', margin: '0 0 4px 0', fontSize: '0.95rem' }}>
+              Required Setup Step: Configure Free Shipping in Shopify
+            </h4>
+            <p style={{ color: '#573b00', fontSize: '0.875rem', margin: 0, lineHeight: '1.4' }}>
+              ShipGoal is a visual progress tracker. To ensure customers actually get free shipping at checkout, you must manually set up a <strong>Free Shipping Rate</strong> matching your threshold inside your <a href="/settings/shipping" target="_top" style={{ color: '#573b00', fontWeight: 'bold', textDecoration: 'underline' }}>Shopify Shipping and Delivery Settings</a>.
+            </p>
+          </div>
+        </div>
+
         <s-paragraph>
           Manage the global default settings for your Free Shipping Tracker block.
           Merchants can place this block anywhere via the Theme Customize panel.
